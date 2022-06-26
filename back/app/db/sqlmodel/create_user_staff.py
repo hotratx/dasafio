@@ -1,22 +1,20 @@
-from .database import User, Cursos
+from datetime import datetime, timedelta
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db import async_session
 from app.core.password import get_password_hash
+from .database import User, Curso
 
 
 async def create_user_staff():
     password = get_password_hash('12345')
 
-    curso2 = Cursos(
+    curso2 = Curso(
             nome="Python Avançado",
             professor='Manoel',
-            alunos='euuu'
+            ativo=True,
+            data_inicio=datetime.utcnow(),
+            data_termino=datetime.utcnow()+timedelta(days=30)
             )
-
-    async with async_session() as session:
-        session.add(curso2)
-        await session.commit()
-        session.refresh(curso2)
 
     user_staff = User(
             nome="admin",
@@ -29,21 +27,19 @@ async def create_user_staff():
             tel_movel=99999999,
             type_user="staff",
             hashed_password=password,
-            cursos=[curso2]
             )
 
-    async with async_session() as session:
-        session.add(user_staff)
-        await session.commit()
-        session.refresh(user_staff)
-
-    curso1 = Cursos(
+    curso1 = Curso(
             nome="Aprenda Python",
             professor='Manoel',
-            alunos='euuu',
-            user_id=user_staff.id
+            ativo=True,
+            data_inicio=datetime.utcnow(),
+            data_termino=datetime.utcnow()+timedelta(days=90),
+            users=[user_staff],
             )
 
     async with async_session() as session:
+        session.add(curso2)
         session.add(curso1)
         await session.commit()
+        await session.refresh(user_staff)

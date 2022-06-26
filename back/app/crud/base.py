@@ -1,7 +1,7 @@
 from typing import List, Protocol
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.schemas import UserDB, CursosDB
+from app.schemas import UserDB, CursoDB
 
 
 class BaseUser(Protocol):
@@ -27,11 +27,14 @@ class BaseCurso(Protocol):
     async def get_all_curses(self, db: AsyncSession):
         ...
 
-    async def add_curso(self, db: AsyncSession, curso: CursosDB):
+    async def add_curso(self, db: AsyncSession, curso: CursoDB):
         ...
 
     async def get_all_professores(self, db: AsyncSession):
         ...
 
     async def get_all_alunos(self, db: AsyncSession):
+        ...
+
+    async def get_all_cursos(self, db: AsyncSession):
         ...

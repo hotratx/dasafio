@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.crud import BaseCurso
-from app.schemas import CursosDB, UserProfessor, UserAlunos
+from app.schemas import CursoDB, UserProfessor, UserAlunos
 from app.core.logger import logger
 
 
@@ -16,7 +16,7 @@ class CursoRepo:
         except:
             return 'erro'
 
-    async def add_curso(self, curso: CursosDB):
+    async def add_curso(self, curso: CursoDB):
         return await self._database.add_curso(self._session, curso)
 
     async def get_all_professores(self) -> UserProfessor | None:
@@ -28,3 +28,8 @@ class CursoRepo:
         alunos = await self._database.get_all_alunos(self._session)
         logger.info(f"ALUNOS: {alunos}")
         return alunos
+
+    async def get_all_cursos(self) -> UserAlunos | None:
+        cursos = await self._database.get_all_cursos(self._session)
+        logger.info(f"CURSOS: {cursos}")
+        return cursos

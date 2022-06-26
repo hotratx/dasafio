@@ -4,9 +4,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.logger import logger
 from sqlalchemy import update
 from sqlmodel import select
-from .database import User, Cursos
+from .database import User, Curso
 from app.schemas import (
-    UserDB, CursosDB, UserProfessor, UserUpdate, UserAlunos
+    UserDB, CursoDB, UserProfessor, UserUpdate, UserAlunos
 )
 
 
@@ -48,22 +48,22 @@ class CRUDUser:
 
 
 class CRUDCurso:
-    _model = Cursos
+    _model = Curso
 
-    async def create_new_curso(self, db: AsyncSession, obj_in: CursosDB) -> Cursos:
+    async def create_new_curso(self, db: AsyncSession, obj_in: CursoDB) -> Curso:
         db_obj = self._model(**obj_in.dict())
         db.add(db_obj)
         await db.commit()
         await db.refresh(db_obj)
         return db_obj
 
-    async def get_all_curses(self, db: AsyncSession) -> List[Cursos]:
-        resp = await db.execute(select(Cursos))
+    async def get_all_curses(self, db: AsyncSession) -> List[Curso]:
+        resp = await db.execute(select(Curso))
         users = resp.scalars().all()
-        response = [Cursos.from_orm(user) for user in users]
+        response = [Curso.from_orm(user) for user in users]
         return response
 
-    async def add_curso(self, db: AsyncSession, obj_in: CursosDB) -> Cursos:
+    async def add_curso(self, db: AsyncSession, obj_in: CursoDB) -> Curso:
         db_obj = self._model(**obj_in.dict())
         db.add(db_obj)
         await db.commit()
@@ -80,4 +80,12 @@ class CRUDCurso:
         resp = await db.execute(select(User).where(User.type_user == 'aluno'))
         users = resp.scalars().all()
         response = [UserAlunos.from_orm(user) for user in users]
+        return response
+
+    async def get_all_cursos(self, db: AsyncSession) -> List[Curso]:
+        resp = await db.execute(select(Curso))
+        users = resp.scalars().all()
+        response = [Curso.from_orm(user) for user in users]
+        for u in response:
+            logger.info(f"ALL CURSOSSSS: {u.users}")
         return response
