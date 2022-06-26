@@ -97,9 +97,21 @@ export const useAuth = defineStore('authUser', {
         throw error.response.data.detail
       }
     },
-    // após registrar deve aparecer página pedindo para registrar email
-    // para só depois armazenar dados como logado, por isso o back não deve 
-    // retornar user após o registro
+    async new_curso(credentials: ICurso) {
+      try {
+        const api = await Auth.new_curso({
+          nome:  credentials.nome,
+          professor:  credentials.professor,
+          ativo:  credentials.ativo,
+          data_inicio: credentials.data_inicio,
+          data_termino: credentials.data_termino,
+        })
+        console.log('API: ', api)
+      } catch (error) {
+        console.log('error.message: ', error.message) // resposta de error do servidor
+        throw error.response.data.detail
+      }
+    },
     async register(credentials: ICredentials) {
       try {
         const api = await Auth.register({...credentials})

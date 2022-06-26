@@ -1,4 +1,4 @@
-import { IUser, ICredentials, ICreateProf, ICreateAluno } from 'components/models';
+import { IUser, ICredentials, ICreateProf, ICreateAluno, ICurso } from 'components/models';
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
@@ -69,6 +69,7 @@ const requests = {
   post: (url: string, body: ICredentials): Promise<AxiosResponse> => apiClient.post(url, body).then(responseBody),
   profile: (url: string, body: IUser): Promise<AxiosResponse> => apiClient.post(url, body).then(responseBody),
   newprof: (url: string, body: ICreateProf): Promise<AxiosResponse> => apiClient.post(url, body).then(responseBody),
+  newcurso: (url: string, body: ICurso): Promise<AxiosResponse> => apiClient.post(url, body).then(responseBody),
   newaluno: (url: string, body: ICreateAluno): Promise<AxiosResponse> => apiClient.post(url, body).then(responseBody),
   put: (url: string, body: IUser): Promise<AxiosResponse> => apiClient.put(url, body).then(responseBody),
   delete: (url: string): Promise<AxiosResponse> => apiClient.delete(url).then(responseBody),
@@ -82,6 +83,8 @@ export const Auth = {
   getProfessores: (): Promise<AxiosResponse> => requests.get('professores'),
 
   getAlunos: (): Promise<AxiosResponse> => requests.get('alunos'),
+
+  getCursos: (): Promise<AxiosResponse> => requests.get('cursos'),
 
   register: (post: ICredentials): Promise<AxiosResponse> => 
     requests.post('auth/register', post),
@@ -97,6 +100,9 @@ export const Auth = {
 
   new_aluno: (post: ICreateAluno): Promise<AxiosResponse> =>
     requests.newprof('auth/register', post),
+
+  new_curso: (post: ICurso): Promise<AxiosResponse> =>
+    requests.newcurso('newcurso', post),
 
   me: (): Promise<AxiosResponse> => requests.get('auth/me'),
 

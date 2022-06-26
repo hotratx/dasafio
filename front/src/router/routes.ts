@@ -28,6 +28,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'me', name: 'me', component: () => import('pages/PageMe.vue') },
       { path: 'professores', name: 'professores', component: () => import('pages/PageProfessores.vue') },
       { path: 'alunos', name: 'alunos', component: () => import('pages/PageAlunos.vue') },
+      { path: 'cursos', name: 'cursos', component: () => import('pages/PageCursos.vue') },
       { path: 'profile', name: 'profile', component: () => import('pages/register/PageProfile.vue') },
     ],
     meta: {

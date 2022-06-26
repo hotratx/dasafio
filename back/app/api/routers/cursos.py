@@ -61,3 +61,27 @@ async def get_cursos(
         ):
     resp = await curso.get_all_cursos()
     return resp
+
+
+@router.post("/newcurso")
+@inject
+async def new_curso(
+    request: Request,
+    response: Response,
+    auth: AuthService = Depends(Provide[Container.auth_service]),
+    curso: CursoService = Depends(Provide[Container.curso_service]),
+    user: UserInLogin = Depends(get_authenticated_user),
+    ):
+    """
+    Add a new curso
+    Args:
+        request: Request
+        response: Response
+    Returns:
+        Response
+    """
+    await auth.only_staff(user)
+    data = await request.json()
+    user = await curso.add_curso(data)
+    return user
+

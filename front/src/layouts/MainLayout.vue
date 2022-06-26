@@ -76,7 +76,7 @@ const linksList = [
   {
     title: 'Cursos',
     icon: 'mdi-calendar-month',
-    routeName: 'foo'
+    routeName: 'cursos'
   },
   {
     title: 'Professores',

@@ -28,7 +28,6 @@
           </q-btn>
         </div>
       </q-toolbar>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -37,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+
 </script>
 
 <style lang="scss">

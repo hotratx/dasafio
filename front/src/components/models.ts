@@ -23,6 +23,14 @@ export interface ICreateAluno {
   password: string,
 }
 
+export interface ICurso {
+  nome: string,
+  professor: string,
+  ativo: boolean,
+  data_inicio: Date,
+  data_termino: Date,
+}
+
 export interface IUser {
   id: string
   email: string

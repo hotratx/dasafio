@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia' 
 import { Auth } from 'boot/axios'
-import { IProfessores, IAlunos } from 'components/models'
 
 interface IState {
   professores: []
   alunos: []
+  cursos: []
 }
 
 export const useData = defineStore('handleData', {
   state: (): IState => ({
     professores: [],
-    alunos: []
+    alunos: [],
+    cursos: []
   }),
 
   getters: {
@@ -36,6 +37,20 @@ export const useData = defineStore('handleData', {
           this.alunos = alunos.data
         }
         console.log('ALUNOS: ', alunos)
+      } catch (error) {
+        console.log('error.message: ', error.message) // resposta de error do servidor
+        throw error.response.data.detail
+      }
+    },
+
+    async getCursos() {
+      try {
+        const cursos = await Auth.getCursos()
+        if (cursos) {
+          console.log('CURSOS: ', cursos.data)
+          this.cursos = cursos.data
+        }
+        console.log('CURSOS: ', cursos)
       } catch (error) {
         console.log('error.message: ', error.message) // resposta de error do servidor
         throw error.response.data.detail
